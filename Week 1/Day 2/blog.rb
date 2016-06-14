@@ -1,5 +1,6 @@
 require 'colorize'
 require 'date'
+
 class Blog
   def initialize(name)
     @name = name
@@ -11,40 +12,43 @@ class Blog
     @content.push(post)
   end
 
-  def publish_post(page)
-
+  def publish(page=1)
+    create_hash_of_content
     puts "\n\n"
     @post_hash[page].each do |x|
-      x.view
+      x.view_post
     end
 
-    pages.each do |x|
+    number_pages_array.each do |x|
       if x == page
         print "#{x} ".colorize(:blue)
       else
         print "#{x} "
       end
     end
+
     puts "\n\n"
     puts "<- Prev       Next ->"
-    
-    ans = gets.chomp
-    if ans.upcase == "NEXT"
+
+    answer = gets.chomp
+
+    if answer.upcase == "NEXT" || answer.upcase == "N"
       if @post_hash[page+1]
-        publish_post(page+1)
+        publish(page+1)
       else
-        publish_post(1)
+        publish(1)
       end
-    elsif ans.upcase == "PREV"
+    elsif answer.upcase == "PREV" || answer.upcase == "P"
       if @post_hash[page-1]
-        publish_post(page-1)
+        publish(page-1)
       else
-        publish_post(5)
+        publish(number_pages_array.last)
       end
     end
+
   end
 
-  def pages
+  def number_pages_array
     modul = @content.length % 3
     if modul == 0
       page = @content.length/3
@@ -60,11 +64,11 @@ class Blog
     return page_array
   end
 
-  def pagination
+  def create_hash_of_content
     publish_page=[]
     publish = @content.sort_by {|item| item.data}.reverse
     post_slice = publish.each_slice(3).to_a
-    pages.each_with_index do |item,i|
+    number_pages_array.each_with_index do |item,i|
     @post_hash[item] = post_slice[i]
     end
   end
@@ -78,7 +82,7 @@ class Post
     @text = text
   end
 
-  def view
+  def view_post
     puts "#{@title}                #{@data}"
     puts "***************"
     puts @text
@@ -87,8 +91,8 @@ class Post
 end
 
 class Sponsored < Post
-  def view
-    puts "******#{@title}******    #{@data.to_s}"
+  def view_post
+    puts "******#{@title}******    #{@data}"
     puts "***************"
     puts @text
     puts "---------------\n\n\n"
@@ -111,5 +115,4 @@ blog.add_post Post.new("Title12",Date.new(2016,6,9),"Text12")
 blog.add_post Post.new("Title13",Date.new(2016,6,7),"Text13")
 blog.add_post Post.new("Title14",Date.new(2016,6,8),"Text14")
 
-blog.pagination
-blog.publish_post(1)
+blog.publish
