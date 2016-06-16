@@ -38,13 +38,12 @@ end
 
 
 class Game
-attr_accessor :obj_to_kill,:obj_for_fun
-  def initialize(hash_rooms,actions,obj_to_kill,obj_for_fun)
+attr_accessor :obj_to
+  def initialize(hash_rooms,actions,obj_to)
     @hash_rooms = hash_rooms
     @actions = actions
     @inventary=[]
-    @obj_to_kill=obj_to_kill
-    @obj_for_fun=obj_for_fun
+    @obj_to=obj_to
   end
 
   def start(room,player)
@@ -131,22 +130,19 @@ class Player
     end
   end
 
-  def use_object(obj,room)
+  def use_object(obj,room) ##
 
-    obje = obj.split(" ").last
+    obje = obj.split(" ").last.downcase
 
-    if @game.obj_to_kill.key?(obje)
-      puts "Nothing to do with the object"
-      @game.continue(room)
-    else
-
-      @game.obj_to_kill[obje.downcase].each do |x|
+    if @game.obj_to.key?(obje)
+      @game.obj_to[obje].each do |x|
         if x == room.bad
           puts "You kill #{room.bad}!!"
           room.bad = ""
           @game.continue(room)
         end
       end
+    else
       puts "Nothing to do with the object"
       @game.continue(room)
       end
@@ -156,7 +152,7 @@ end
 
 roomA = Room.new(false,"G","B",false,"a desert","a lot of light","water","","You can't pass, sand dune!")
 roomB = Room.new("A","F",false,"C","home","three doors","pendrive","","There is no door in this direction!")
-roomC = Room.new(false,"B","D",false,"Ironhack campus","a lot of people","computer","Darth vader","Not allowed, a lot of bugs!")
+roomC = Room.new(false,"B","D",false,"Ironhack campus","a lot of people","","computer","Not allowed, a lot of bugs!")
 roomD = Room.new("C","E",false,false,"the mountain","two doors","","dragon","You can't pass, a Cliff!")
 roomE = Room.new("F",false,false,"D","the beach","a lot of light","lifeguard","","Not allowed,
 rough sea!")
@@ -165,11 +161,11 @@ roomG = Room.new(false,false,"F","A","the forest","two doors","knife","scorpion"
 
 hash_rooms = {"A" => roomA,"B" => roomB,"C" => roomC,"D" => roomD,"E" => roomE,"F" => roomF,"G" => roomG}
 actions = ["RUN","KILL","EAT","CRY"]
-obj_to_kill = {"knife" => ["crocodile","scorpion","dragon"],"lifeguard" => ["scorpion","dragon"],"water" => ["dragon"],}
-obj_for_fun = {"pendrive" => ["computer"],}
+obj_to = {"knife" => ["crocodile","scorpion","dragon"],"lifeguard" => ["scorpion","dragon"],"water" => ["dragon"],"pendrive" => ["computer"]}
 
 
-game = Game.new(hash_rooms,actions,obj_to_kill,obj_for_fun)
+
+game = Game.new(hash_rooms,actions,obj_to)
 player = Player.new(game)
 
 
