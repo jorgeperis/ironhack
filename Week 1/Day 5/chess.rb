@@ -1,126 +1,43 @@
 require 'pry'
-class Board
-
-  def initialize(position)
-  @position = position
-  end
-
-  def print_board
-
-    [8,7,6,5,4,3,2,1].each do |x|
-      @position.each do |key,value|
-        if (key.to_s).index(x.to_s) != nil
-          if value == nil
-            print "-- "
-          else
-            print "#{value} "
-          end
-        end
-      end
-      puts "\n"
-    end
-  end
-end
-
 
 class Tokens
 
-  def initialize(movements)
-    @input_movements = movements
-    @tokens_position={}
-  end
-
-  def choose_token
-    @input_movements.each do |position|
-      pos_sym = position.split('').to_sym
-      if @board[pos_sym] != nil
-        @tokens_position[pos_sym] = @board[pos_sym]
-      end
-    end
-  end
-end
-
-class Rock < Tokens
-attr_reader :moves
-  def initialize(board,start_finish)
+  def initialize(movements,board)
+    @movements = movements
     @board = board
-    @origin = start_finish[0]
-    @finish = start_finish[1]
-    @moves =[]
-    @valid_moves = {}
   end
 
-  def validation
-    opposite = ""
+  def tokenSort(token)
 
-    if @board[@origin.to_sym] == "wR"
-      opposite = "b"
-    else
-      opposite = "w"
+    if token.include? "P"
+      puts "pawn"
+    elsif token.include? "N"
+      puts "knight"
+    elsif token.include? "B"
+      puts "bishop"
+    elsif token.include? "R"
+      puts "rook"
+    elsif token.include? "Q"
+      puts "queen"
+    elsif token.include? "K"
+      puts "king"
     end
 
-    x0 = @origin[0]
-    y0 = @origin[1].to_i
-    x1 = @finish[0]
-    y1 = @finish[1].to_i
+  end
 
-    if @board[@finish.to_sym].index(opposite) != nil || @board[@finish.to_sym] == nil
-
-      if x0 == x1
-        ((y0+1)...y1).each do |y|
-          if @board["#{x0}#{y}".to_sym] != nil
-            return @moves.push("ILLEGAL")
-          end
-        end
-
-        return @moves.push("LEGAL")
-
-      elsif y0 == y1
-        (x0...x1).each_with_index do |x,i|
-
-          if i == 0
-            next
-          end
-
-          if @board["#{x}#{y0}".to_sym] != nil
-            return @moves.push("ILLEGAL")
-          end
-        end
-
-        return @moves.push("LEGAL")
-
-      else
-        return @moves.push("ILLEGAL")
-      end
-
-    elsif @board[@finish.to_sym].index(x0) != nil
-      return @moves.push("ILLEGAL")
+  def loopMovements
+    @movements.each do |x|
+      tokenSort(@board[x[0].to_sym])
     end
   end
 
+
 end
-
-
-
-
-
-
-
-
-
-hash_position={}
-('a'..'h').each do |x|
-  (1..8).each do |y|
-    hash_position["#{x}#{y}".to_sym] = nil
-  end
-end
-
 
 def getMovements_file(file)
 
-  get_moves = IO.read(file)
-  array_moves = get_moves.split(' ')
   movements_array =[]
+  array_moves = IO.read(file).split(' ')
 
   i=0
   begin
@@ -130,16 +47,24 @@ def getMovements_file(file)
   return movements_array
 end
 
+def getBoard_file(file)
+  hash_position={}
+  board = IO.read(file).split(" ")
 
-hash_position[:a2] = "wR"
-hash_position[:a7] = "bR"
-hash_position[:d2] = "wK"
+  i=0
+  [8,7,6,5,4,3,2,1].each do |y|
+    ('a'..'h').each do |x|
+      hash_position["#{x}#{y}".to_sym] = board[i]
+      #print "#{board[i]} "
+      i += 1
+    end
+    #puts "\n"
+  end
+  return hash_position
+end
 
-tokens = Tokens.new(getMovements_file("simple_moves.txt"))
-board = Board.new(hash_position)
-board.print_board
-wRock = Rock.new(hash_position,["a2","a7"])
+movements = getMovements_file("simple_moves.txt")
+board = getBoard_file("simple_board.txt")
 
-
-wRock.validation
-puts wRock.moves
+tokens = Tokens.new(movements,board)
+tokens.loopMovements
