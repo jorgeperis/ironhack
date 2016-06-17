@@ -6,6 +6,7 @@ class Board
   end
 
   def print_board
+
     [8,7,6,5,4,3,2,1].each do |x|
       @position.each do |key,value|
         if (key.to_s).index(x.to_s) != nil
@@ -20,6 +21,7 @@ class Board
     end
   end
 end
+
 
 class Tokens
 
@@ -36,50 +38,65 @@ class Tokens
       end
     end
   end
-
-
-  def validation
-
-    @moves.each do |position|
-      pos_sym = position.join('').to_sym
-
-      if @board[pos_sym] == nil || @board[pos_sym].index('b') != nil
-        @valid_moves[pos_sym] = 'LEGAL'
-      else
-        @valid_moves[pos_sym] = 'ILLEGAL'
-      end
-
-    end
-  end
 end
 
 class Rock < Tokens
-attr_reader :valid_moves
-  def initialize(board)
+attr_reader :moves
+  def initialize(board,start_finish)
     @board = board
-    @origin = @board.key("wR").to_s.split('') #an array with x and y #change to get from outside
+    @origin = start_finish[0]
+    @finish = start_finish[1]
     @moves =[]
     @valid_moves = {}
   end
 
-  def movement
+  def validation
+    opposite = ""
 
-    (1..8).each do |y|
-
-      add_coor = [@origin[0],y.to_s]
-      @moves.push(add_coor)
-
+    if @board[@origin.to_sym] == "wR"
+      opposite = "b"
+    else
+      opposite = "w"
     end
 
-    ("a".."h").each do |x|
+    x0 = @origin[0]
+    y0 = @origin[1].to_i
+    x1 = @finish[0]
+    y1 = @finish[1].to_i
 
-      add_coor = [x,@origin[1]]
-      @moves.push(add_coor)
+    if @board[@finish.to_sym].index(opposite) != nil || @board[@finish.to_sym] == nil
 
+      if x0 == x1
+        ((y0+1)...y1).each do |y|
+          if @board["#{x0}#{y}".to_sym] != nil
+            return @moves.push("ILLEGAL")
+          end
+        end
+
+        return @moves.push("LEGAL")
+
+      elsif y0 == y1
+        (x0...x1).each_with_index do |x,i|
+
+          if i == 0
+            next
+          end
+
+          if @board["#{x}#{y0}".to_sym] != nil
+            return @moves.push("ILLEGAL")
+          end
+        end
+
+        return @moves.push("LEGAL")
+
+      else
+        return @moves.push("ILLEGAL")
+      end
+
+    elsif @board[@finish.to_sym].index(x0) != nil
+      return @moves.push("ILLEGAL")
     end
-    @moves.delete(@origin)
   end
-
 
 end
 
@@ -99,17 +116,30 @@ hash_position={}
 end
 
 
+def getMovements_file(file)
+
+  get_moves = IO.read(file)
+  array_moves = get_moves.split(' ')
+  movements_array =[]
+
+  i=0
+  begin
+     movements_array.push([array_moves[i],array_moves[i+1]])
+     i +=2;
+  end until i >= array_moves.length
+  return movements_array
+end
 
 
 hash_position[:a2] = "wR"
 hash_position[:a7] = "bR"
 hash_position[:d2] = "wK"
 
-tokens = Tokens.new
+tokens = Tokens.new(getMovements_file("simple_moves.txt"))
 board = Board.new(hash_position)
 board.print_board
-wRock = Rock.new(hash_position)
+wRock = Rock.new(hash_position,["a2","a7"])
 
-wRock.movement #first
-wRock.validation #second
-puts wRock.valid_moves #we have de legal and ilegal moves
+
+wRock.validation
+puts wRock.moves
