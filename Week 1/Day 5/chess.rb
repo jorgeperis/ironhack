@@ -1,23 +1,18 @@
 require 'pry'
 
 class Tokens
-
   def initialize(board,start,finish)
     @board = board
     @start = start
     @finish = finish
     @x_start = @start[0]
     @y_start = @start[1]
-
   end
 end
-
-
 
 class Pawn < Tokens
 
   def validator
-
     token = @board[@start]
 
     if token.include? 'b'
@@ -25,7 +20,6 @@ class Pawn < Tokens
     else
       w_validator(token)
     end
-
   end
 
 
@@ -33,86 +27,85 @@ class Pawn < Tokens
     my_color = 'w'
     opp_color = 'b'
 
-
     if @start[1] == 2 #one or two movements
       if @board[@finish] == "--"
         if @finish == [@x_start,@y_start + 1]
-          return  puts "LEGAL"
+          return  "LEGAL"
         elsif @finish == [@x_start,@y_start + 2] && @board[[@x_start,@y_start + 1]] == "--"
-          return puts "LEGAL"
+          return "LEGAL"
         else
-          return puts "ILLEGAL"
+          return "ILLEGAL"
         end
       elsif @board[@finish].include? 'b'
         if @finish == [@x_start - 1,@y_start + 1] || @finish == [@x_start + 1,@y_start + 1]
-          return puts "LEGAL"
+          return "LEGAL"
         else
-          return puts "ILLEGAL"
+          return "ILLEGAL"
         end
       else
-        return puts "ILLEGAL"
+        return "ILLEGAL"
       end
     else #one movement
-      if @board[@finish] == '--' && @finish = [@x_start,@y_start+1]
-        return puts "LEGAL"
+      if @board[@finish] == '--' && @finish = [@x_start,@y_start + 1]
+        return "LEGAL"
       else
-        return puts "ILLEGAL"
+        return "ILLEGAL"
       end
     end
-
   end
 
   def b_validator(token)
     my_color = 'b'
     opp_color = 'w'
 
-
-
     if @start[1] == 7 #one or two movements
       if @board[@finish] == "--"
         if @finish == [@x_start,@y_start -1]
-          return puts "LEGAL"
+          return "LEGAL"
         elsif @finish == [@x_start,@y_start - 2] && @board[[@x_start,@y_start - 1]] == "--"
-          return puts "LEGAL"
+          return "LEGAL"
         else
-          return puts "ILLEGAL"
+          return "ILLEGAL"
         end
       elsif @board[@finish].include? 'w'
         if @finish == [@x_start - 1,@y_start - 1] || @finish == [@x_start + 1,@y_start - 1]
-          return puts "LEGAL"
+          return "LEGAL"
         else
-          return puts "ILLEGAL"
+          return "ILLEGAL"
         end
       else
-        return puts "ILLEGAL"
+        return "ILLEGAL"
       end
     else #one movements
-
-      if @board[@finish] == '--' && @finish = [@x_start,@y_start-1]
-        return puts "LEGAL"
+      if @board[@finish] == '--' && @finish = [@x_start,@y_start - 1]
+        return "LEGAL"
       end
     end
   end
-
-
 end
 
 
 class Knight < Tokens
 
   def validator
-    puts "knight"
+    return "knight"
   end
 
 end
 
+
 class Board
 
-  def initialize(board,movements)
+  def initialize(board,movements,result = [])
     @board = board
     @movements = movements
     @start = ""
     @finish =""
+    @result = result
+  end
+
+  def show_result
+    puts @result
   end
 
   def loopMovements
@@ -128,9 +121,9 @@ class Board
   def tokenSort(token)
 
     if token.include? "P"
-      Pawn.new(@board,@start,@finish).validator
+      @result.push(Pawn.new(@board,@start,@finish).validator)
     elsif token.include? "N"
-      Knight.new(@board,@start,@finish).validator
+      @result.push(Knight.new(@board,@start,@finish).validator)
     elsif token.include? "B"
       puts "bishop"
     elsif token.include? "R"
@@ -140,7 +133,7 @@ class Board
     elsif token.include? "K"
       puts "king"
     else
-      puts "ILLEGAL"
+      @result.push("ILLEGAL")
     end
   end
 end
@@ -192,3 +185,4 @@ board = getBoard_file("simple_board.txt")
 
 board = Board.new(board,local_movements)
 board.loopMovements
+board.show_result
