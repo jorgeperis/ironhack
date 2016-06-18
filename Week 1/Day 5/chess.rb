@@ -163,6 +163,65 @@ class Rook < Tokens
   end
 end
 
+class Bishop < Tokens
+  def validator
+
+
+    if ((@y_finish - @y_start) == (@x_finish - @x_start) || (@y_finish - @y_start) == (@x_start - @x_finish))
+      if (@x_finish > @x_start) && (@y_finish > @y_start)
+        try = @start
+        while (try[0] < 8) && (try[1] < 8) do
+          try = [try[0] + 1,try[1] + 1]
+          if (try == @finish) && ((@board[try] == '--') || (@board[try].include? @opposite))
+            return 'LEGAL'
+          end
+          if @board[try] != '--'
+            return 'ILLEGAL'
+          end
+        end
+
+      elsif (@x_finish < @x_start) && (@y_finish > @y_start)
+        try = @start
+        while (try[0] > 1) && (try[1] < 8) do
+          try = [try[0] - 1,try[1] + 1]
+          if (try == @finish) && ((@board[try] == '--') || (@board[try].include? @opposite))
+            return 'LEGAL'
+          end
+          if @board[try] != '--'
+            return 'ILLEGAL'
+          end
+        end
+      elsif (@x_finish > @x_start) && (@y_finish < @y_start)
+
+        try = @start
+        while (try[0] < 8) && (try[1] > 1) do
+          try = [try[0] + 1,try[1] - 1]
+          if (try == @finish) && ((@board[try] == '--') || (@board[try].include? @opposite))
+            return 'LEGAL'
+          end
+          if @board[try] != '--'
+            return 'ILLEGAL'
+          end
+        end
+      elsif (@x_finish < @x_start) && (@y_finish < @y_start)
+        try = @start
+        while (try[0] > 1) && (try[1] > 1) do
+          try = [try[0] - 1,try[1] - 1]
+          if (try == @finish) && ((@board[try] == '--') || (@board[try].include? @opposite))
+            return 'LEGAL'
+          end
+          if @board[try] != '--'
+            return 'ILLEGAL'
+          end
+        end
+      else
+        return 'ILLEGAL'
+      end
+    else
+      return 'ILLEGAL'
+    end
+  end
+end
 
 class King < Tokens
 
@@ -182,6 +241,20 @@ class King < Tokens
 
   end
 
+end
+
+class Queen < Tokens
+  def validator
+
+    bishop = Bishop.new(@board,@start,@finish).validator
+    rook = Rook.new(@board,@start,@finish).validator
+
+    if (bishop == 'ILLEGAL') && (rook == 'ILLEGAL')
+      return 'ILLEGAL'
+    else
+      return 'LEGAL'
+    end
+  end
 end
 
 class Knight < Tokens
@@ -235,11 +308,11 @@ class Board
     elsif token.include? "N"
       @result.push(Knight.new(@board,@start,@finish).validator)
     elsif token.include? "B"
-      @result.push("bishop")
+      @result.push(Bishop.new(@board,@start,@finish).validator)
     elsif token.include? "R"
-      @result.push("#{Rook.new(@board,@start,@finish).validator} + Rook + #{@start} #{@finish}")
+      @result.push(Rook.new(@board,@start,@finish).validator)
     elsif token.include? "Q"
-      @result.push("queen")
+      @result.push(Queen.new(@board,@start,@finish).validator)
     elsif token.include? "K"
       @result.push(King.new(@board,@start,@finish).validator)
     else
@@ -270,7 +343,7 @@ def convert_movements_to_local_system(movements)
     local_movements.push([[change[x[0][0]],x[0][1].to_i],[change[x[1][0]],x[1][1].to_i]])
   end
 
-return local_movements
+  return local_movements
 end
 
 def getBoard_file(file)
