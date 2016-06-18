@@ -7,8 +7,29 @@ class Tokens
     @finish = finish
     @x_start = @start[0]
     @y_start = @start[1]
+    @x_finish = @finish[0]
+    @y_finish = @finish[1]
     @token = @board[@start]
+
+    if @token.include? 'b'
+      @opposite = 'w'
+    else
+      @opposite = 'b'
+    end
+
   end
+
+  def check_possibility(possibility)
+    possibility.each do |position|
+
+      if (@finish == position) && ((@board[position] == '--') || (@board[position].include? @opposite))
+        return 'LEGAL'
+      end
+    end
+
+    return 'ILLEGAL'
+  end
+
 end
 
 class Pawn < Tokens
@@ -80,40 +101,108 @@ class Pawn < Tokens
     else #one movements
       if @board[@finish] == '--' && @finish = [@x_start,@y_start - 1]
         return "LEGAL"
+      else
+        return "ILLEGAL"
       end
     end
   end
 end
 
+class Rook < Tokens
+  def validator
+    if @y_start == @y_finish #horizontal movements
+      if @x_finish > @x_start #right
+        ((@x_start + 1)..@x_finish).each do |x_move|
+            if (x_move == @x_finish) && ((@board[[x_move,@y_start]] == '--') || (@board[[x_move,@y_start]].include? @opposite))
+              return 'LEGAL'
+            end
+            if @board[[x_move,@y_start]] != '--'
+              return 'ILLEGAL'
+            end
+        end
+      else
+        if @x_finish < @x_start #left
+          ((10-(@x_start - 1))..(10 - @x_finish)).each do |x_move|
+              if ((10 - x_move) == @x_finish) && ((@board[[(10 - x_move),@y_start]] == '--') || (@board[[(10 - x_move),@y_start]].include? @opposite))
+                return 'LEGAL'
+              end
+              if @board[[(10 - x_move),@y_start]] != '--'
+                return 'ILLEGAL'
+              end
+          end
+        end
+      end
+
+    elsif @x_start == @x_finish #vertical movements
+
+      if @y_finish > @y_start #top
+        ((@y_start + 1)..@y_finish).each do |y_move|
+            if (y_move == @y_finish) && ((@board[[@x_start,y_move]] == '--') || (@board[[@x_start,y_move,]].include? @opposite))
+              return 'LEGAL'
+            end
+            if @board[[@x_start,y_move]] != '--'
+              return 'ILLEGAL'
+            end
+        end
+      else
+        if @y_finish < @y_start #down
+          ((10-(@y_start - 1))..(10 - @y_finish)).each do |y_move|
+              if ((10 - y_move) == @y_finish) && ((@board[[@x_start,(10 - y_move)]] == '--') || (@board[[@x_start,(10 - y_move)]].include? @opposite))
+                return 'LEGAL'
+              end
+              if @board[[@x_start,(10 - y_move)]] != '--'
+                return 'ILLEGAL'
+              end
+          end
+        end
+      end
+    else
+      return "ILLEGAL"
+    end
+
+  end
+end
+
+
+class King < Tokens
+
+  def validator
+
+    possibility=[]
+    possibility[0] = [@x_start - 1,@y_start + 1]
+    possibility[1] = [@x_start,@y_start + 1]
+    possibility[2] = [@x_start + 1,@y_start + 1]
+    possibility[3] = [@x_start + 1,@y_start]
+    possibility[4] = [@x_start + 1,@y_start - 1]
+    possibility[5] = [@x_start,@y_start - 1]
+    possibility[6] = [@x_start - 1,@y_start - 1]
+    possibility[7] = [@x_start - 1,@y_start]
+
+    check_possibility(possibility)
+
+  end
+
+end
 
 class Knight < Tokens
 
   def validator
-
-    if @token.include? 'b'
-      opposite = 'w'
-    else
-      opposite = 'b'
-    end
 
     possibility=[]
     possibility[0] = [@x_start - 1,@y_start + 2]
     possibility[1] = [@x_start + 1,@y_start + 2]
     possibility[2] = [@x_start - 1,@y_start - 2]
     possibility[3] = [@x_start + 1,@y_start - 2]
+    possibility[4] = [@x_start - 2,@y_start + 1]
+    possibility[5] = [@x_start + 2,@y_start + 1]
+    possibility[6] = [@x_start - 2,@y_start - 1]
+    possibility[7] = [@x_start + 2,@y_start - 1]
 
-    possibility.each do |position|
 
-      if (@finish == position) && ((@board[position] == '--') || (@board[position].include? opposite))
-        return 'LEGAL'
-      end
-    end
-    
-    return 'ILLEGAL'
+    check_possibility(possibility)
+
   end
-
 end
-
 
 class Board
 
@@ -146,13 +235,13 @@ class Board
     elsif token.include? "N"
       @result.push(Knight.new(@board,@start,@finish).validator)
     elsif token.include? "B"
-      puts "bishop"
+      @result.push("bishop")
     elsif token.include? "R"
-      puts "rook"
+      @result.push("#{Rook.new(@board,@start,@finish).validator} + Rook + #{@start} #{@finish}")
     elsif token.include? "Q"
-      puts "queen"
+      @result.push("queen")
     elsif token.include? "K"
-      puts "king"
+      @result.push(King.new(@board,@start,@finish).validator)
     else
       @result.push("ILLEGAL")
     end
@@ -200,10 +289,10 @@ def getBoard_file(file)
   return hash_position
 end
 
-movements = getMovements_file("simple_moves.txt")
+movements = getMovements_file("complex_moves.txt")
 local_movements = convert_movements_to_local_system(movements)
-board = getBoard_file("simple_board.txt")
-
+board = getBoard_file("complex_board.txt")
 board = Board.new(board,local_movements)
+
 board.loopMovements
 board.show_result
