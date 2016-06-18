@@ -7,23 +7,24 @@ class Tokens
     @finish = finish
     @x_start = @start[0]
     @y_start = @start[1]
+    @token = @board[@start]
   end
 end
 
 class Pawn < Tokens
 
   def validator
-    token = @board[@start]
 
-    if token.include? 'b'
-      b_validator(token)
+    if @token.include? 'b'
+      b_validator
     else
-      w_validator(token)
+      w_validator
     end
+
   end
 
 
-  def w_validator(token)
+  def w_validator
     my_color = 'w'
     opp_color = 'b'
 
@@ -54,7 +55,7 @@ class Pawn < Tokens
     end
   end
 
-  def b_validator(token)
+  def b_validator
     my_color = 'b'
     opp_color = 'w'
 
@@ -88,7 +89,27 @@ end
 class Knight < Tokens
 
   def validator
-    return "knight"
+
+    if @token.include? 'b'
+      opposite = 'w'
+    else
+      opposite = 'b'
+    end
+
+    possibility=[]
+    possibility[0] = [@x_start - 1,@y_start + 2]
+    possibility[1] = [@x_start + 1,@y_start + 2]
+    possibility[2] = [@x_start - 1,@y_start - 2]
+    possibility[3] = [@x_start + 1,@y_start - 2]
+
+    possibility.each do |position|
+
+      if (@finish == position) && ((@board[position] == '--') || (@board[position].include? opposite))
+        return 'LEGAL'
+      end
+    end
+    
+    return 'ILLEGAL'
   end
 
 end
@@ -96,12 +117,12 @@ end
 
 class Board
 
-  def initialize(board,movements,result = [])
+  def initialize(board,movements)
     @board = board
     @movements = movements
     @start = ""
     @finish =""
-    @result = result
+    @result = []
   end
 
   def show_result
