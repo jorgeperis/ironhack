@@ -17,7 +17,6 @@ def getConversations(file)
         else
           conection[firstName].push((line.match /@\w*/).to_s.tr('@',''))
         end
-
       else
         names=[]
         while line.include? '@'
@@ -33,9 +32,6 @@ def getConversations(file)
         end
       end
   end
-  # conection.each do |key,value|
-  #   puts "#{key} -> #{value}"
-  # end
   return conection
 end
 
@@ -44,17 +40,20 @@ end
 class Users
 
   def initialize(conversation,user)
-    @conversation = conversation#hash with usr as a key and an array of mentioned users
+    @conversation = conversation
     @user = user
     @interconected = {}
     @deep = ['first','second','third','fourth','fifth','sixth']
+
     @deep.each do |x|
       @interconected[x] = []
     end
+
   end
 
-  def bilateralConversation(first,user)
+  def bilateralConversation(deep,user)
     @conversation[user].each do |mention|
+      binding.pry
       @conversation[mention].each do |mentionedByMention|
         if mentionedByMention == user
           result =[]
@@ -64,7 +63,7 @@ class Users
             end
           end
           unless (@user == mention) || (result.include? true)
-            @interconected[first].push(mention)
+            @interconected[deep].push(mention)
           end
         end
       end
@@ -72,95 +71,32 @@ class Users
   end
 
   def start
-
     bilateralConversation(@deep[0],@user)
     @deep.each_with_index do |deep,index|
       if deep == 'first'
         next
       end
-
       @interconected[@deep[index-1]].each_with_index do |interconected,i|
         bilateralConversation(deep,@interconected[@deep[index-1]][i])
       end
-
     end
+    show_results
+  end
 
-    puts @interconected
+  def show_results
+    puts @user
+    @interconected.each do |key,value|
+      if value != []
+      puts value.join(', ')
+      end
+    end
     puts "\n"
   end
 
-
-
 end
 
-conversation = getConversations('Simple.txt')
+puts "\n"
+conversation = getConversations('Complex.txt')
 conversation.each do |key,value|
   Users.new(conversation,key).start
 end
-
-
-
-# end
-
-
-# def orderFriends(conection)
-#   twoWaysConection = []
-#   conection.each do |startName,mentionArray|
-#     mentionArray.each do |mention|
-#       if conection[mention] != nil
-#         conection[mention].each do |name|
-#           if name == startName
-#             twoWaysConection.push([startName,mention])
-#           end
-#         end
-#       end
-#     end
-#   end
-#   # twoWaysConection.each do |x|
-#   #   puts "#{x[0]} <--> #{x[1]}"
-#   # end
-#   return twoWaysConection
-# end
-#
-# def firstFriends(conection)
-#   con = {}
-#   conection.each do |firstconection|
-#     conection.each do |conections|
-#       if firstconection[1] == conections[0]
-#         if con[firstconection[0]] == nil
-#           con[firstconection[0]] = Array.new([conections[0]])
-#         else
-#           unless con[firstconection[0]].include? conections[0]
-#             con[firstconection[0]].push(conections[0])
-#           end
-#         end
-#       end
-#     end
-#   end
-#   # puts con
-# end
-
-# interconected(getConversations('Simple.txt'))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#hola
