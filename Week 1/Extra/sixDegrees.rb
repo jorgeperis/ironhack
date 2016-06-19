@@ -44,30 +44,63 @@ end
 class Users
 
   def initialize(conversation,user)
-  @conversation = conversation#hash with usr as a key and an array of mentioned users
-  @user = user
-  @interconected = {}
-  @interconected[@user] = []
+    @conversation = conversation#hash with usr as a key and an array of mentioned users
+    @user = user
+    @interconected = {}
+    @deep = ['first','second','third','fourth','fifth','sixth']
+    @deep.each do |x|
+      @interconected[x] = []
+    end
   end
 
-  def bilateralConversation
-    @conversation[@user].each do |mention|
+  def bilateralConversation(first,user)
+    @conversation[user].each do |mention|
       @conversation[mention].each do |mentionedByMention|
-        if mentionedByMention == @user
-            @interconected[@user].push(mention)
+        if mentionedByMention == user
+          result =[]
+          @deep.each do |deep|
+            if @interconected[deep] != nil
+              result.push(@interconected[deep].include? mention)
+            end
+          end
+          unless (@user == mention) || (result.include? true)
+            @interconected[first].push(mention)
+          end
         end
       end
     end
-    puts @interconected
   end
+
+  def start
+
+    bilateralConversation(@deep[0],@user)
+    @deep.each_with_index do |deep,index|
+      if deep == 'first'
+        next
+      end
+
+      @interconected[@deep[index-1]].each_with_index do |interconected,i|
+        bilateralConversation(deep,@interconected[@deep[index-1]][i])
+      end
+
+    end
+
+    puts @interconected
+    puts "\n"
+  end
+
 
 
 end
 
 conversation = getConversations('Simple.txt')
 conversation.each do |key,value|
-  Users.new(conversation,key).bilateralConversation
+  Users.new(conversation,key).start
 end
+
+
+
+# end
 
 
 # def orderFriends(conection)
