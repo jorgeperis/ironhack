@@ -8,11 +8,8 @@
   <h2>Blog of <%= @blogname%></h2>
   <br>
   <br>
-  <% @posts[@page].each do |post| %>
-  <h4><%=post.title%>......................<%=post.date%></h4>
-  <h5><%=post.text%></h5>
-  <br>
-  <br>
+  <% @posts[@page].each_with_index do |post,i| %>
+  <h4><a href="/post_details/<%=@page%>/<%=i%>"><%=post.title%></a></h4>
   <%end%>
 
   <%@number_pages.each_with_index do |page,i|%>
@@ -28,6 +25,7 @@
     <button type="submit" name="prevornext" value="next">Next</button>
     <input type="hidden" name="page" value="<%=@page%>">
   </form>
+  <h4><a href="/new_post">New post</a></h4>
 
 </body>
 </html>

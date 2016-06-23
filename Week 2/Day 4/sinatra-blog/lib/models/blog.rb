@@ -13,25 +13,6 @@ attr_reader :posts, :post_hash, :name
     create_hash_of_content
   end
 
-  def prevORnext(page)
-
-    answer = gets.chomp
-
-    if answer.upcase == "NEXT" || answer.upcase == "N"
-      if @post_hash[page+1]
-        publish(page+1)
-      else
-        publish(page)
-      end
-    elsif answer.upcase == "PREV" || answer.upcase == "P"
-      if @post_hash[page-1]
-        publish(page-1)
-      else
-        publish(page)
-      end
-    end
-
-  end
 
   def number_pages_array
     reminder = @posts.length % @post_per_page

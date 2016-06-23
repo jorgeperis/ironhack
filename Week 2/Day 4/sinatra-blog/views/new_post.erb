@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My blog</title>
+
+</head>
+<body>
+  <h2>Blog of <%= @blogname%></h2>
+  <br>
+  <br>
+  <form action="/new_post" method="POST">
+    <input type="text" name="title" placeholder="Title"><br><br>
+    <input type="text" name="text" placeholder="Content">
+    <input type="text" name="author" placeholder="Author">
+    <input type="text" name="category" placeholder="Category">
+    <br><br>
+    <button value="add">Add </button>
+  </form>
+
+</body>
+</html>

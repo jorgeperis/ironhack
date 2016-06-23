@@ -17,12 +17,44 @@ blog.add_post Post.new("Title8",Date.new(2016,06,11),"Text8")
 blog.add_post Post.new("Title9",Date.new(2016,06,05),"Text9")
 page = 1
 
+
 get '/' do
   @number_pages = blog.number_pages_array
   @posts = blog.post_hash
   @page = page
   @blogname = blog.name
   erb :home
+end
+
+get '/new_post' do
+  @blogname = blog.name
+  erb :new_post
+end
+
+get '/post_details/:page/:index' do
+  page_toshow = params[:page].to_i
+  index_post = params[:index].to_i
+  post = blog.post_hash[page_toshow][index_post]
+  @blogname = blog.name
+  @title = post.title
+  @date = post.date
+  @text = post.text
+  @author = post.author
+  @category = post.category
+  erb :post_details
+end
+
+post '/new_post' do
+  title = params["title"]
+  text = params["text"]
+  author = params["author"]
+  category = params["category"]
+  blog.add_post Post.new(title,Date.new(2016,06,14),text,author,category)
+  redirect to '/'
+end
+
+post '/post_details/:page/:index' do
+  redirect to '/post_details/:page/:index'
 end
 
 post '/pages' do
