@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My blog</title>
+
+</head>
+<body>
+  <h2>Blog of <%= @blogname%></h2>
+  <br>
+  <br>
+  <% @posts[@page].each do |post| %>
+  <h4><%=post.title%>......................<%=post.date%></h4>
+  <h5><%=post.text%></h5>
+  <br>
+  <br>
+  <%end%>
+
+  <%@number_pages.each_with_index do |page,i|%>
+    <%if @page == page%>
+    <b><%= page %></b>
+    <% else %>
+    <%= page %>
+    <%end%>
+  <%end%>
+
+  <form action="/pages" method="POST">
+    <button type="submit" name="prevornext" value="pre">Previous</button>
+    <button type="submit" name="prevornext" value="next">Next</button>
+    <input type="hidden" name="page" value="<%=@page%>">
+  </form>
+
+</body>
+</html>
