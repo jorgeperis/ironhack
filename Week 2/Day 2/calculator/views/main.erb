@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Online Calculator</title>
+</head>
+<body>
+  <img src="calc.png" height="150" width="150">
+  <h2>Calculator</h2>
+  <form action="/calculate" method="POST">
+    <input type="number" name="first_number" placeholder="<%= @first_number %>">
+    <input type="number" name="second_number" placeholder="2nd number">
+    <br>
+    <br>
+    <button type="submit" name="operation" value="add">Add</button>
+    <button type="submit" name="operation" value="substract">Substract</button>
+    <button type="submit" name="operation" value="multiply">Multiply</button>
+    <button type="submit" name="operation" value="divide">Divide</button>
+    <button type="submit" name="operation" value="count">Counting</button>
+
+  </form>
+
+</body>
+</html>

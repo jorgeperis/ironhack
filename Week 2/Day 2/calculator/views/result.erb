@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Result</title>
+</head>
+<body>
+  <img src="calc.png" height="150" width="150">
+  <h2>Result</h2>
+  <% if @operation == "count" %>
+    <% while @first > 0 %>
+      <h2><%= @first %></h2>
+      <% @first -= 1 %>
+    <% end %>
+  <% else %>
+  <h3><%= "#{@first} #{@operation_instance.sym} #{@second} = #{@result}" %></h3>
+
+  <form action="/store" method="POST">
+    <button type="submit" name ="operation" value = "<%= @result %>">Store</button>
+  </form>
+  <% end %>
+</body>
+</html>
