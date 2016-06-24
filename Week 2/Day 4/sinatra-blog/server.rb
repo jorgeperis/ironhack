@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'sinatra/reloader'
-require 'colorize'
 require './lib/models/blog.rb'
 require './lib/models/post.rb'
 require 'pry'
@@ -41,6 +40,10 @@ get '/post_details/:page/:index' do
   @text = post.text
   @author = post.author
   @category = post.category
+  @class = ""
+   if post.class == Sponsored
+     @class = '(Sponsored)'
+   end
   erb :post_details
 end
 
@@ -58,22 +61,6 @@ post '/post_details/:page/:index' do
 end
 
 post '/pages' do
-  @posts = blog.post_hash
-  page = params["page"].to_i
-
-  if params["prevornext"] == "next"
-    if @posts[page+1]
-      page += 1
-      redirect to '/'
-    else
-      redirect to '/'
-    end
-  elsif params["prevornext"] == "pre"
-    if @posts[page-1]
-       page -= 1
-       redirect to '/'
-    else
-      redirect to '/'
-    end
-  end
+  page = blog.next_or_previous(params["prevornext"],params["page"].to_i)
+  redirect to '/'
 end

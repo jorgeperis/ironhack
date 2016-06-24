@@ -11,6 +11,7 @@ attr_reader :posts, :post_hash, :name
   def add_post(post)
     @posts.push(post)
     create_hash_of_content
+    return @posts
   end
 
 
@@ -44,5 +45,24 @@ attr_reader :posts, :post_hash, :name
     end
 
   return @post_hash
+  end
+
+  def next_or_previous(nextorprevious,page)
+
+    if nextorprevious == "next"
+      if @post_hash[page+1]
+        page += 1
+        return page
+      else
+        return page
+      end
+    elsif nextorprevious == "pre"
+      if @post_hash[page-1]
+         page -= 1
+         return page
+      else
+        return page
+      end
+    end
   end
 end
