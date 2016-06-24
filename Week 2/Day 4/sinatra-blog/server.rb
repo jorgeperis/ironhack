@@ -56,10 +56,6 @@ post '/new_post' do
   redirect to '/'
 end
 
-post '/post_details/:page/:index' do
-  redirect to '/post_details/:page/:index'
-end
-
 post '/pages' do
   page = blog.next_or_previous(params["prevornext"],params["page"].to_i)
   redirect to '/'
