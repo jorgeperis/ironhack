@@ -1,0 +1,22 @@
+.content {
+  width: 80%;
+  margin:auto;
+
+}
+
+.boxfilm {
+  width: 33%;
+  float:right;
+  text-align: center;
+  min-height: 550px;
+
+}
+
+img {
+  display: block;
+  max-width:300px;
+  max-height:500px;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+}

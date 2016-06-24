@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movies</title>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+<body>
+  <h2>Movies Posters</h2>
+  <h3><%=@question[1]%></h3>
+<div class="content">
+
+  <% @films.each_with_index do |film,index| %>
+  <div class="boxfilm"><a href="/answer/<%=film.id%>"><img src="<%=film.poster%>"/></a>
+  <h4><%=film.title%></h4></div>
+  <% end %>
+</div>
+
+</body>
+</html>
