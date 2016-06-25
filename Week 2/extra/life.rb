@@ -8,20 +8,9 @@ class Cell
   end
 
   def regenerate
-    case @state
-      when 1
-        if (@neighbours.reduce(:+) == 2) || (@neighbours.reduce(:+) == 3)
-          return 1
-        else
-          return 0
-        end
-      when 0
-        if @neighbours.reduce(:+) == 3
-          return 1
-        else
-          return 0
-        end
-    end
+    return 1 if ((@neighbours.reduce(:+) == 2) || (@neighbours.reduce(:+) == 3)) && @state == 1
+    return 1 if (@neighbours.reduce(:+) == 3) && @state == 0
+    return 0
   end
 end
 
