@@ -1,0 +1,102 @@
+body {
+    background-image: url("https://trello-backgrounds.s3.amazonaws.com/53baf533e697a982248cd73f/4200x4200/48dbf0b5a546541e847e267a5dcd2201/shutterstock_134707556.jpg");
+    background-size: cover;
+}
+
+.img-center {
+  margin:5px auto;
+}
+
+#logo {
+  opacity: 0.5;
+  filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+#logo:hover {
+  opacity: 0.8;
+  filter: alpha(opacity=80); /* For IE8 and earlier */
+}
+.padd-6 {
+  padding:6px !important;
+}
+
+.col-sm-3 .nav li a{
+  color:white !important;
+}
+
+.col-sm-3 .nav li a:hover{
+  background-color: rgba(255,255,255, 0.2);
+}
+
+.btn{
+  margin:5px 3px;
+  padding:5px 10px;
+  border:0;
+}
+
+.btn-default {
+  background-color: rgba(255,255,255,0.3);
+}
+.btn-default strong {
+  color:white;
+}
+.btn-default:hover {
+  background-color: rgba(255,255,255,0.4);
+}
+
+.col-sm-3 {
+  padding-right:5px;
+}
+.navbar-header {
+  width:100px;
+}
+#brand {
+  font-size: 18px;
+  color:white;
+  padding-left:10px;
+}
+.preboard {
+  margin-top:30px;
+}
+
+.whitethin {
+  color:white;
+  font-size: 9pt;
+  margin-top: 2px;
+  margin-left:5px;
+  padding:5px 10px !important;
+}
+.whitethin:hover {
+  background-color:rgba(0,0,0,0.3) !important;
+  color:white;
+}
+.textwhitethin{
+  padding-left:5px;
+}
+.panel-default {
+  margin-top:20px;
+}
+.panel-body {
+  font-weight: bold;
+  padding-top:5px;
+  padding-left: 5px;
+  color:#4d4d4d;
+  height:100%;
+}
+.subpanel {
+  background-color:white !important;
+  margin:10px;
+}
+.panel-default {
+  background-color: #e2e4e6;
+}
+.subpanel .panel-body {
+  font-weight: normal;
+}
+.label-danger {
+  color:#d9534f;
+}
+.treeimage {
+max-width:100%;
+max-height:100%;
+}
