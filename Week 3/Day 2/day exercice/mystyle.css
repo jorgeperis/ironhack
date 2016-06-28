@@ -1,10 +1,17 @@
 body {
   background-color: #F2F2F2;
 }
+
+/*Panel*/
 .panel-heading {
   background-color: white !important;
   padding: 0 15px;
 }
+.panel {
+  clear: both;
+}
+
+/*User post information*/
 .profile-icon {
   border-radius: 50%;
 }
@@ -22,14 +29,16 @@ body {
   float: left;
   margin: 10px 0 0 10px;
   color: #736E6E;
+  font-size: 0.9em;
 }
-.panel {
-  clear: both;
-}
+
+/*Bounty information*/
 .bounty-post-text {
   color: black;
   font-size: 1.2em;
 }
+
+/*Tags category*/
 .popularity {
   color: #FFA500;
 }
@@ -55,10 +64,19 @@ color: #9D9B9B;
 .btn-default:first-child {
   color: #F94F4F;
 }
+
+/*Text of the panel*/
 .text-panel {
-  margin: 10px 0 25px 0;
+  margin: 10px 0 15px 0;
   clear: both;
   font-size: 1.5em;
+}
+
+/*Button and circle of comment*/
+.comment {
+  overflow: auto;
+  padding-top: 20px;
+  clear: both;
 }
 .comment-circle {
   float:left;
@@ -82,4 +100,50 @@ color: #9D9B9B;
 .comment-button:hover {
   background: #e6e6e6;
   color: black;
+}
+
+/*Likes and how much comments section*/
+.glyphicon-heart, .glyphicon-comment {
+  float:left;
+  display: inline-block;
+  color: red;
+  font-size: 1.2em;
+  margin-right: 15px;
+  margin-left: 4px;
+}
+.glyphicon-comment {
+  color: grey;
+}
+.like-text, .view-comments-text {
+  font-size: 0.9em;
+}
+.like, .view-comments {
+  clear: both;
+  margin-bottom: 5px;
+}
+
+/*Comments*/
+.expanded-comments {
+  margin-top: 20px;
+}
+.pure-comment {
+  overflow: auto;
+  clear: both;
+  margin: 10px 0;
+}
+.pure-comment .comment-circle {
+  margin-top: 7px;
+}
+.comment-text {
+  width: 90%;
+  float: left;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+.comment-text p {
+  margin: 0;
+}
+.comment-text img {
+  max-width: 100%;
+  max-height: 100%;
 }
