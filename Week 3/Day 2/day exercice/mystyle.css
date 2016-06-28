@@ -1,0 +1,85 @@
+body {
+  background-color: #F2F2F2;
+}
+.panel-heading {
+  background-color: white !important;
+  padding: 0 15px;
+}
+.profile-icon {
+  border-radius: 50%;
+}
+.user-post {
+  overflow: auto;
+  margin: 10px 0;
+}
+.user-post-image {
+  float:left;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+.user-post-text {
+  float: left;
+  margin: 10px 0 0 10px;
+  color: #736E6E;
+}
+.panel {
+  clear: both;
+}
+.bounty-post-text {
+  color: black;
+  font-size: 1.2em;
+}
+.popularity {
+  color: #FFA500;
+}
+.popularity-icon {
+  float:left;
+  display: inline-block;
+}
+.glyphicon-ok-circle {
+  font-size: 18px;
+}
+.popularity-number {
+  float: left;
+  margin: -1px 10px 0 0;
+  font-size: 1.2em;
+}
+.btn {
+font-size: 0.8em;
+font-weight: bolder;
+padding: 1px 5px;
+margin-bottom: 2px;
+color: #9D9B9B;
+}
+.btn-default:first-child {
+  color: #F94F4F;
+}
+.text-panel {
+  margin: 10px 0 25px 0;
+  clear: both;
+  font-size: 1.5em;
+}
+.comment-circle {
+  float:left;
+  display: inline-block;
+  background-color: grey;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.comment-button {
+  float: left;
+  width: 120px;
+  height: 36px;
+  border: 1px solid #4EA3ED;
+  color: #4EA3ED;
+  border-radius: 18px;
+  text-align: center;
+  line-height: 36px;
+  margin: -5px 0 0 10px;
+}
+.comment-button:hover {
+  background: #e6e6e6;
+  color: black;
+}
