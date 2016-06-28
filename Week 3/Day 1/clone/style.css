@@ -1,0 +1,47 @@
+
+body {
+  background-image: url("http://blackrockdigital.github.io/startbootstrap-creative/img/header.jpg");
+  background-size: 100% 786px;
+  font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+
+.header {
+  color: #A7A5A5;
+  font-weight: bold;
+}
+.header-brand {
+  height: 60px;
+  padding-left: 10px;
+  line-height: 60px;
+}
+.brand {
+  font-size: 1.4em;
+}
+.header-nav li {
+  text-decoration: none;
+  display: inline;
+  margin: 0 10px;
+  float:right;
+}
+.header-brand {
+  height: 60px;
+  font-size: 1em;
+  padding-right: 10px;
+  line-height: 60px;
+}
+.principal {
+  border-top: 1px solid #A7A5A5;
+}
+.title {
+  font-size: 3.5em;
+  text-align: center;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.title p {
+  margin-top: 150px;
+}
+.col-sm-12 {
+  width: 100%;
+}
