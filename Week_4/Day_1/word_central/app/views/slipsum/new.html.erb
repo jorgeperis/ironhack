@@ -1,0 +1,7 @@
+<form action="/slipsum" method="post">
+  <input type="radio" name="wop[wop]" value="paragraphs" checked> paragraphs<br>
+  <input type="radio" name="wop[wop]" value="words"> words<br>
+  <input type="number" name="wop[number]">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <button type="submit">Submit</button>
+</form>

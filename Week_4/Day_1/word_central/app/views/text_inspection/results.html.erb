@@ -1,0 +1,10 @@
+<h2><%= @text %></h2>
+<h3>This text have <%= @word_count %> words</h3>
+<h4>You need <%= sprintf('%.2f', @time) %> seconds to read the text</h4>
+<% 10.times do |i|%>
+<% if @result[i] != nil %>
+<p>The word <b>"<%= @result[i][0] %>"</b> appear <b><%= @result[i][1] %></b> times</p>
+<%end%>
+<% end %>
+
+<%= link_to 'Home', '/' %>
