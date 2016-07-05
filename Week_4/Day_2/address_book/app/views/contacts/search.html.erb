@@ -1,0 +1,5 @@
+<ul>
+<% @contacts.each do |contact| %>
+  <li><%= link_to contact.name,action: "moreinfo", id: contact.id %><%=image_tag('tick.png') if contact.status != nil%></li>
+<% end %>
+</ul>

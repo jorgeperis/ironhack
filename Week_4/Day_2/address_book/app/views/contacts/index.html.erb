@@ -1,0 +1,15 @@
+<ul>
+<% @contacts.each do |contact| %>
+  <li><%= link_to contact.name,action: "moreinfo", id: contact.id %><%=image_tag('tick.png') if contact.status != nil%></li>
+<% end %>
+</ul>
+<%= link_to 'New contact', new_path %>
+<br><br>
+<form action="/search" method="GET">
+  <div>
+    <label for="search">Search by name</label>
+    <input type="name" name="contact[name]">
+  </div>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <button type="submit">Search</button>
+</form>
