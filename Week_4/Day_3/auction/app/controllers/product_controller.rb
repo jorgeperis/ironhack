@@ -2,6 +2,7 @@ class ProductController < ApplicationController
 
   def info
     @product = Product.find_by(id: params[:id])
+    @bids = Bid.where("product_id = #{@product.id}")
   end
 
   def show
