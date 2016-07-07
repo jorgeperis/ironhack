@@ -2,7 +2,13 @@ class ProductController < ApplicationController
 
   def info
     @product = Product.find_by(id: params[:id])
-    @bids = Bid.where("product_id = #{@product.id}")
+    @bids = Bid.where(product: @product)
+    @bid = Bid.new
+    @timeto = (@product.deadline - DateTime.now)
+    @mm, @ss = @timeto.divmod(60)
+    @hh, @mm = @mm.divmod(60)
+    @dd, @hh = @hh.divmod(24)
+    @bestbid = Bid.order(amount: :desc).first
   end
 
   def show
