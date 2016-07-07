@@ -15,8 +15,19 @@ class UserController < ApplicationController
 
   end
 
-  def destroy
-    
+  def manage
+    @products = Product.where(:user_id => session[:current_user_id])
+    @bids = Bid.where(:user_id => session[:current_user_id])
+    @finishedproducts = Product.where("deadline < ?", DateTime.now)
+    @won = []
+    @finishedproducts.each do |finishedproduct|
+      @winnerbid = Bid.where(product: finishedproduct).order(amount: :desc).first
+      if @winnerbid.user_id == session[:current_user_id]
+        @won.push(@winnerbid.product)
+      end
+    end
+
+
   end
 
   def new

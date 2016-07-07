@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   post '/bids', to: 'bid#create'
   get '/', to: 'sessions#login'
   post '/login', to: 'sessions#create'
+  get '/users/manage', to: 'user#manage'
   get "/products/:id", to: 'product#info'
   delete "/product/destroy", to: 'product#destroy'
+
 end
