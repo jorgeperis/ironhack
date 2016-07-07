@@ -7,7 +7,7 @@ class BidController < ApplicationController
     @product = Product.find_by(id: params[:bid][:product_id])
     @bid = Bid.new(amount: params[:bid][:amount], user: @user, product: @product)
 
-      if @bid.valid?
+      if @bid.valid? && @product.user != @user
         @bid.save
         redirect_to "/products/#{@product.id}"
       else

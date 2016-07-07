@@ -1,10 +1,14 @@
 <h1>Product info</h1>
 <h2><b><%= @product.title %></b></h2>
 <h2><%= @product.description %></h2>
-<h3>Deadline: <%= @product.deadline %></h3>
 <h4>User: <%= @product.user.name %></h4>
+<% if @timeto < 0 %>
+<h3>Time to deadline: FINISH!</h3>
+<% else %>
 <h3>Time to deadline: <%="#{@dd} days, #{@hh} hours, #{@mm} minutes"%></h3>
+<% end %>
 
+<% if @bids.first %>
 <h2>Best bid: <%= @bestbid.amount %>€ - <%=@bestbid.user.name%></h2>
 <h1>Bids</h1>
 <ul>
@@ -12,11 +16,12 @@
   <li><%= bid.amount %>€ - <%= bid.user.name %></li>
   <% end %>
 </ul>
+<% end %>
 <br><br>
 
 <% if @timeto < 0 %>
   <h1>Winner</h1>
-  <h2>Winner: <%= bid.user.name %></h2>
+  <h2>Winner: <%= @bestbid.user.name %></h2>
 <% else %>
 <h1>Add Bid</h1>
   <%= form_for @bid do |f| %>

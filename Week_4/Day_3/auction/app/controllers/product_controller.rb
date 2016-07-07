@@ -8,7 +8,7 @@ class ProductController < ApplicationController
     @mm, @ss = @timeto.divmod(60)
     @hh, @mm = @mm.divmod(60)
     @dd, @hh = @hh.divmod(24)
-    @bestbid = Bid.order(amount: :desc).first
+    @bestbid = @bids.order(amount: :desc).first
   end
 
   def show
