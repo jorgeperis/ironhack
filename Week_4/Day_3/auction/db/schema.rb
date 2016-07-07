@@ -10,15 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707122928) do
+ActiveRecord::Schema.define(version: 20160707132704) do
 
   create_table "bids", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "product_id"
     t.integer  "amount"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "minimun_bid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_bids_on_product_id"
     t.index ["user_id"], name: "index_bids_on_user_id"
   end
@@ -30,6 +29,7 @@ ActiveRecord::Schema.define(version: 20160707122928) do
     t.datetime "deadline"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "minimun_bid"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160707122928) do
     t.text     "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "password"
   end
 
 end

@@ -9,6 +9,15 @@ class ProductController < ApplicationController
     @hh, @mm = @mm.divmod(60)
     @dd, @hh = @hh.divmod(24)
     @bestbid = @bids.order(amount: :desc).first
+    if @bestbid
+      if @bestbid.amount > @product.minimun_bid
+        @minimunbid = @bestbid.amount
+      else
+        @minimunbid = @product.minimun_bid
+      end
+    else
+      @minimunbid = @product.minimun_bid
+    end
   end
 
   def show
@@ -16,10 +25,11 @@ class ProductController < ApplicationController
   end
 
   def create
-    @user = User.find_by(email: params[:product][:user_id])
+    @user = User.find_by_id(session[:current_user_id])
     @product = Product.new(title: params[:product][:title],
                             description: params[:product][:description],
                             deadline: params[:product][:deadline],
+                            minimun_bid: params[:product][:minimun_bid],
                             user: @user)
     if @product.valid?
       @product.save
@@ -30,7 +40,8 @@ class ProductController < ApplicationController
   end
 
   def destroy
-    #code
+    Product.find(params[:product_id]).destroy
+    redirect_to products_show_path
   end
 
   def new

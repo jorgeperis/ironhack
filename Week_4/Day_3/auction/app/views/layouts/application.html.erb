@@ -9,6 +9,9 @@
   </head>
 
   <body>
+    <header>
+      <h2>Hello <%= User.find_by_id(session[:current_user_id]).name %>!</h2>
+    </header>
     <%= yield %>
   </body>
 </html>
