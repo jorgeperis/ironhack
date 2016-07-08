@@ -1,0 +1,9 @@
+<h1>Add a Comment to <%= @movie.title %></h1>
+
+<%= form_for @comment do |f| %>
+
+  <%= f.label :text %>
+  <%= f.text_area :text %>
+
+  <%= f.button 'Save comment'%>
+<% end %>

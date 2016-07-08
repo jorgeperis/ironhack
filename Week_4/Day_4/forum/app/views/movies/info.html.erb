@@ -2,4 +2,19 @@
 <%= image_tag(@movie.poster, height: '150', width: '100')  %>
 <h4><%= @movie.year %></h4>
 <h3><%= @movie.plot_summary %></h3>
-<h2><%= link_to "Start a discussion", "/create/#{@movie.id}" %></h2>
+<br><br>
+<h2>Comments:</h2>
+<% if @newmovie %>
+  <h2><%= link_to "Start a discussion", "/create/#{@movie.id}" %></h2>
+<% else %>
+  <% @movie.comments.each do |comment| %>
+  <h3><i><%= comment.text %></i></h3>
+  <h4><%= link_to comment.user.username, "/comments/#{comment.user.id}" %></h4>
+  <br><br>
+  <% end %>
+  <% if session[:current_user_id] %>
+    <%= link_to "New comment", "/comments/#{@movie.id}/new" %>
+  <% else %>
+    <%= link_to "login to comment", "/comments/#{@movie.id}/login" %>
+  <% end %>
+<% end %>

@@ -7,6 +7,26 @@ class MoviesController < ApplicationController
   def show
   end
 
+  def login
+    @user = User.new
+    @movie = Movie.find(params[:movieid])
+  end
+
+  def checklogin
+    @user = User.find_by(username: params[:user][:username])
+
+    if @user
+      if @user.password == params[:user][:password]
+        session[:current_user_id] = @user.id
+        redirect_to "/info/#{params[:movieid]}"
+      else
+        render :text => "No valid"
+      end
+    else
+      render :text => "No user"
+    end
+  end
+
   def search
     @movieSearch = Movie.where(title: params[:movie])
     if @movieSearch.empty?
@@ -26,11 +46,18 @@ class MoviesController < ApplicationController
   end
 
   def info
-    @movie = Movie.find(params[:id])
+    if Movie.find_by(id: params[:id])
+      @movie = Movie.find(params[:id])
+      @newmovie = false
+    else
+      @newmovie = true
+      @movie = Imdb::Movie.new(params[:id])
+    end
+
   end
 
   def create
-    if Movie.find(params[:movieid])
+    if Movie.find_by(id: params[:movieid])
       @movie = Movie.find(params[:movieid])
     else
       movie = Imdb::Movie.new(params[:movieid])
@@ -41,6 +68,6 @@ class MoviesController < ApplicationController
       @movie.plot_summary = movie.plot_summary
       @movie.save
     end
-    redirect_to "/info/#{@movie.id}"
+    redirect_to "/comments/#{@movie.id}/new"
   end
 end
