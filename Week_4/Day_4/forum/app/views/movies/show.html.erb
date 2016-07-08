@@ -1,0 +1,8 @@
+
+
+
+<ul>
+<% @movieslimit20.each do |movie| %>
+<li><%= link_to movie.title, "/info/#{movie.id}"  %></li>
+<% end %>
+</ul>

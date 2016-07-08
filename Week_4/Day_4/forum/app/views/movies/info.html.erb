@@ -1,0 +1,5 @@
+<h1><%= @movie.title %></h1>
+<%= image_tag(@movie.poster, height: '150', width: '100')  %>
+<h4><%= @movie.year %></h4>
+<h3><%= @movie.plot_summary %></h3>
+<h2><%= link_to "Start a discussion", "/create/#{@movie.id}" %></h2>
