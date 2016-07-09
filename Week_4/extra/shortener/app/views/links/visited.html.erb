@@ -1,0 +1,7 @@
+<ul>
+
+<% @visited.each do |page| %>
+<li>URL: <%= page.original %> - Created at: <%= page.created_at.strftime("%m/%d/%Y") %> - Visits: <%= page.visit %> </li>
+<% end %>
+
+</ul>

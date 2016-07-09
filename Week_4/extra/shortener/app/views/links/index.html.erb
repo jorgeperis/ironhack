@@ -1,0 +1,6 @@
+<h1>Shortener URL</h1>
+<%= form_tag("/create", method: "post") do %>
+    <%= label_tag(:q, "Insert the URL to short") %>
+    <%= text_field_tag(:q) %>
+    <%= submit_tag("GO!") %>
+    <% end %>
