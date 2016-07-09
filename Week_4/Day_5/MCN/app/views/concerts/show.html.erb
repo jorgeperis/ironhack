@@ -1,0 +1,17 @@
+<div class="mainconcerts">
+  <div class="upsideconcerts">
+    <h2>Sort Concerts</h2>
+  </div>
+  <% @concerts.each do |concert| %>
+    <a href="/concerts/<%= concert.id %>/details">
+      <div class="concert">
+        <div class="poster">
+          <%= image_tag concert.avatar.url(:thumb) %>
+        </div>
+        <div class="artist">
+          <%=  concert.artist %>
+        </div>
+      </div>
+    </a>
+  <% end %>
+</div>

@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    text-align: center;
+}
+header {
+  width: 100%;
+  border-bottom: 1px solid #648fb5;
+  background-color: #40464b;
+}
+
+header p {
+  font-family: "Dosis";
+  font-size:4em;
+  margin:0;
+  color: #648fb5;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 15px;
+}
+
+container {
+  min-height: 100%;
+  overflow: auto;
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style-type: none;
+}
+h2 {
+  font-size:2em;
+  font-weight: bold;
+  font-family: "Dosis";
+  margin: 0px;
+  text-align: left;
+}
+.upsideconcerts {
+  width: 60%;
+  border-bottom: 1px dashed #648fb5;
+  margin: 20px auto;
+}
+.concert {
+  width: 60%;
+  height: 100px;
+  margin: 15px auto;
+  border: 1px solid #648fb5;
+  background-color: #e6e6e6;
+}
+.concertmonth {
+  width: 60%;
+  height: 70px;
+  margin: 15px auto;
+  border: 1px solid #648fb5;
+  background-color: #e6e6e6;
+}
+.poster {
+  width: 50%;
+  float:left;
+}
+.poster img {
+  margin:auto;
+}
+.artist {
+  width: 50%;
+  float:left;
+  text-align: left;
+  line-height: 100px;
+  font-family: "Dosis";
+  font-size: 3.5em;
+}
+.artistmonth {
+  width: 70%;
+  float:left;
+  text-align: left;
+  line-height: 70px;
+  font-family: "Dosis";
+  font-size: 2.5em;
+  padding-left: 10px;
+}
+.mainconcerts {
+  width: 70%;
+  height: 100%;
+  float:left;
+}
+.sidebar {
+  width:30%;
+  float:left;
+  height: 100%;
+}

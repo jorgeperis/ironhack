@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MCN</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+  </head>
+
+  <body>
+    <container>
+    <header>
+      <p>Music Concert Network</p>
+    </header>
+    <div class="navbar">
+      <ul>
+        <li><%= form_tag("/price", method: "get") do %>
+            <%= label_tag(:q, "Search for price:") %>
+            <%= number_field_tag(:q) %>
+            <%= submit_tag("Search") %>
+            <% end %>
+        </li>
+        <li><%= link_to "Popular concerts", popular_path %></li>
+      </ul>
+    </div>
+    <%= yield %>
+    </container>
+
+  </body>
+
+</html>

@@ -1,0 +1,34 @@
+
+
+<div class="sidebar">
+  <div class="upsideconcerts">
+    <h2>Month's concerts</h2>
+  </div>
+  <% @concertsmonth.each do |concertmonth| %>
+    <a href="/concerts/<%= concertmonth.id %>/details">
+      <div class="concertmonth">
+        <div class="artistmonth">
+          <%=  concertmonth.artist %>
+        </div>
+      </div>
+    </a>
+  <% end %>
+</div>
+
+<div class="mainconcerts">
+  <div class="upsideconcerts">
+    <h2>Today's concerts</h2>
+  </div>
+  <% @concerts.each do |concert| %>
+    <a href="/concerts/<%= concert.id %>/details">
+      <div class="concert">
+        <div class="poster">
+          <%= image_tag concert.avatar.url(:thumb) %>
+        </div>
+        <div class="artist">
+          <%=  concert.artist %>
+        </div>
+      </div>
+    </a>
+  <% end %>
+</div>

@@ -1,0 +1,27 @@
+
+<h1>Details of <%= @concert.artist %></h1>
+<br>
+<%= image_tag @concert.avatar.url(:medium) %>
+<ul>
+  <li>Date: <%= @concert.date %></li>
+  <li>City: <%= @concert.city %></li>
+  <li>Price: <%= @concert.price %>€</li>
+  <li>Description: <%= @concert.description %></li>
+  <li>Venue: <%= @concert.venue %></li>
+</ul>
+<br>
+<p>Comments:</p>
+<% @concert.comments.each do |comment| %>
+<h3><%= comment.text_comment %></h3>
+<h4><%= comment.created_at %> </h4>
+<br><br>
+<% end %>
+<p>New comment:</p>
+
+<%= form_for @comment do |f| %>
+
+  <%= f.label :text_comment %>
+  <%= f.text_area :text_comment %>
+
+  <%= f.button 'Send comment'%>
+<% end %>

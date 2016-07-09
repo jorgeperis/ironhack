@@ -1,0 +1,12 @@
+
+City.create(city: "Valencia")
+City.create(city: "Barcelona")
+City.create(city: "Madrid")
+City.create(city: "Murcia")
+City.create(city: "Zaragoza")
+City.create(city: "Sevilla")
+City.create(city: "Granada")
+City.create(city: "Bilbao")
+City.create(city: "Tarragona")
+City.create(city: "Huesca")
+City.create(city: "Málaga")
