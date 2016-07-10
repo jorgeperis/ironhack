@@ -1,0 +1,51 @@
+
+<div class="header">
+  <p>
+    <%= @project.name %>
+  </p>
+</div>
+
+<div class="container">
+  <div class="gantt">
+    <div class="project">
+      <%= @project.name %> - From: <%= @project.start %> to: <%= @project.finish %> ( <%=@days%> days)
+    </div>
+    <br>
+    <% @project.tasks.each do |task| %>
+    <br>
+    <div class="task" style="margin-left:<%=Task.margin(task) %>%;width:<%= Task.width(task) %>%">
+    <%= link_to task.name, "/task/#{task.id}" %> - <%= (task.finish - task.start).to_i %> days
+    </div>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="links">
+  <div class="new_button">
+    <%= link_to "New Task", "/task/new/" %>
+  </div>
+  <div class="new_button">
+    <%= link_to "New Colleague", "/colleague/new/" %>
+  </div>
+  <div class="new_button">
+    <%= link_to "New Project", "/new/" %>
+  </div>
+  <div class="new_button">
+    <%= link_to "Home", "/" %>
+  </div>
+</div>
+
+<div class="colleagues">
+  <b>Colleagues:</b>
+  <ul>
+
+  <% @project.colleagues.each do |colleague| %>
+  <li>
+  <div class="colleague_button">
+    <%= link_to colleague.name, "/colleague/details/#{colleague.id}" %>
+  </div>
+</li>
+  <% end %>
+  </ul>
+</div>

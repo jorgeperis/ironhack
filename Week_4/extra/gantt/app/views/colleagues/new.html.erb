@@ -1,0 +1,11 @@
+<h1>Add a Colleague</h1>
+
+<%= form_for @colleague do |f| %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.select :project, Project.all.collect {|p| [ p.name, p.id ] }, { prompt: "Select Project" } %>
+
+  <%= f.button 'Save Colleague'%>
+<% end %>

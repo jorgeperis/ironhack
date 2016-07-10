@@ -1,0 +1,5 @@
+
+<%= form_for :project, url: show_path, method: 'POST' do |f| %>
+<%= f.select :project, Project.all.collect {|p| [ p.name, p.id ] }, { prompt: "Select Project" } %>
+<%= f.button 'Show Project'%>
+<% end %>

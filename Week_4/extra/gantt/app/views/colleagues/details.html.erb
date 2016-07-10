@@ -1,0 +1,7 @@
+<h1><%= @colleague.name %> </h1>
+<h2>Tasks:</h2>
+<ul>
+<% @colleague.tasks.each do |task| %>
+  <li><%= task.name %></li>
+<% end %>
+</ul>
