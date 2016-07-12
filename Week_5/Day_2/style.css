@@ -1,0 +1,20 @@
+img {
+  width:100px;
+  height:100px;
+}
+.results {
+  width: 33%;
+  float:left;
+}
+
+.albums {
+  width: 33%;
+  float:left;
+}
+.search {
+  width: 100%;
+}
+.tracks {
+  width: 33%;
+  float: left;
+}
