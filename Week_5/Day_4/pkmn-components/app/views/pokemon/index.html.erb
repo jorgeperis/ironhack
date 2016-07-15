@@ -1,0 +1,125 @@
+<h1>Pokédex</h1>
+
+<!-- List of pokemon -->
+<ul class="pokedex-list">
+  <% @pokemon.each do |pkmn| %>
+    <li>
+      <button class="js-show-pokemon btn btn-link"
+          data-pokemon-uri="<%= pkmn["resource_uri"] %>">
+        <%= pkmn["name"] %>
+      </button>
+    </li>
+  <% end %>
+</ul>
+
+
+<!-- Pokemon modal view (hidden at first) -->
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content" style="overflow: auto;">
+
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+
+        <h3 class="modal-title">
+          <span class="js-pokemon-name"></span>
+          <small class="js-pokemon-id"></small>
+          <img class="js-pokemon-image" src=""/>
+        </h3>
+      </div><!-- .modal-header -->
+
+      <div class="modal-body">
+        <dl class="dl-horizontal">
+          <dt>Height</dt>
+          <dd class="js-pokemon-height"></dd>
+
+          <dt>Weight</dt>
+          <dd class="js-pokemon-weight"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+          <h3>Stats:</h3>
+          <dt>Hit points</dt>
+          <dd class="js-pokemon-hp"></dd>
+
+          <dt>Attack</dt>
+          <dd class="js-pokemon-attack"></dd>
+
+          <dt>Defense</dt>
+          <dd class="js-pokemon-defense"></dd>
+
+          <dt>Special attack</dt>
+          <dd class="js-pokemon-sattack"></dd>
+
+          <dt>Special defense</dt>
+          <dd class="js-pokemon-sdefense"></dd>
+
+          <dt>Speed</dt>
+          <dd class="js-pokemon-speed"></dd>
+        </dl>
+        <dl class="dl-horizontal types">
+          <h3>Types:</h3>
+          <!-- code here -->
+        </dl>
+      </div><!-- .modal-body -->
+
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+</div><!-- .modal -->
+
+<div class="modal fade modaltype">
+  <div class="modal-dialog">
+    <div class="modal-content" style="overflow: auto;">
+
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+
+        <h3 class="modal-title">
+          <span class="js-pokemon-name"></span>
+          <small class="js-pokemon-id"></small>
+          <img class="js-pokemon-image" src=""/>
+        </h3>
+      </div><!-- .modal-header -->
+
+      <div class="modal-body">
+        <dl class="dl-horizontal">
+          <dt>Height</dt>
+          <dd class="js-pokemon-height"></dd>
+
+          <dt>Weight</dt>
+          <dd class="js-pokemon-weight"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+          <h3>Stats:</h3>
+          <dt>Hit points</dt>
+          <dd class="js-pokemon-hp"></dd>
+
+          <dt>Attack</dt>
+          <dd class="js-pokemon-attack"></dd>
+
+          <dt>Defense</dt>
+          <dd class="js-pokemon-defense"></dd>
+
+          <dt>Special attack</dt>
+          <dd class="js-pokemon-sattack"></dd>
+
+          <dt>Special defense</dt>
+          <dd class="js-pokemon-sdefense"></dd>
+
+          <dt>Speed</dt>
+          <dd class="js-pokemon-speed"></dd>
+        </dl>
+        <dl class="dl-horizontal types">
+          <h3>Types:</h3>
+          <!-- code here -->
+        </dl>
+      </div><!-- .modal-body -->
+
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+</div><!-- .modal -->
