@@ -1,66 +1,97 @@
 $(document).ready(function() {
+  var length = 4;
+  var time = 300;
+  var left = [0,-1];
+  var up = [-1,0];
+  var right = [0,1];
+  var down = [1,0];
+  var move = left;
 
-    function createGrid() {
-        for (var i = 0; i < 15; i++) {
-            for (var j = 0; j < 15; j++) {
-                var div = $('<div>');
-                div.attr('data-row', i).attr('data-col', j).addClass('blue');
-                $('.container').append(div);
-            }
-        }
-    }
-
-    createGrid();
-
-    $('.container').on('click', 'div', function() {
-        var firstCol = parseInt($(this).attr('data-col'));
-        var firstRow = parseInt($(this).attr('data-row'));
-        $(this).toggleClass('blue red').attr('id',0);
-        [1,2,3,4].forEach(function(i) {
-          var newCol = firstCol + i;
-          var newCell = $('[data-row="' + firstRow + '"][data-col="' + newCol + '"]').get(0);
-          $(newCell).toggleClass('blue orange').attr('id',i);
-        });
-        $(document).on('keydown', function(e) {
-
-          $('[id="4"]').toggleClass('orange blue').removeAttr('id');
-          $('[id="3"]').attr('id',4);
-          $('[id="2"]').attr('id',3);
-          $('[id="1"]').attr('id',2);
-
-
-          if (e.keyCode == 38){
-            moveCell(-1,0);
-          }else if (e.keyCode == 37){
-            moveCell(0,-1);
-          }else if (e.keyCode == 40){
-            moveCell(1,0);
-          }else if (e.keyCode == 39){
-            moveCell(0,1);
+  function createGrid() {
+      for (var i = 0; i < 15; i++) {
+          for (var j = 0; j < 15; j++) {
+              var div = $('<div>');
+              div.attr('data-row', i).attr('data-col', j).addClass('blue');
+              $('.container').append(div);
           }
-        });
-    })
+      }
+  }
 
-    function moveCell(moveRow,moveCol) {
-      var col = parseInt($('.red').attr('data-col'));
-      var row = parseInt($('.red').attr('data-row'));
-      var newRow = row + moveRow;
-      var newCol = col + moveCol;
-      if (newRow == 15) {
-        newRow = 0;
-      } else if (newRow == -1){
-        newRow = 14;
+  function keyPress(){
+    var movement = setInterval(moveCells,time);
+    $(document).on('keydown', function(e) {
+      clearInterval(movement);
+      if (e.keyCode == 38){
+        move = up;
+      }else if (e.keyCode == 37){
+        move = left;
+      }else if (e.keyCode == 40){
+        move = down;
+      }else if (e.keyCode == 39){
+        move = right;
       }
-      if (newCol == 15) {
-        newCol = 0;
-      } else if (newCol == -1){
-        newCol = 14;
+      movement = setInterval(moveCells,time);
+    });
+  }
+
+  function start() {
+    for (var i = 0; i<=length;i++){
+      if (i == 0){
+        var color = "red";
+      } else {
+        var color = "orange";
       }
-      console.log(newRow);
-      console.log(newCol);
-      var newCell = $('[data-row="' + newRow + '"][data-col="' + newCol + '"]').get(0);
-      $('[id="0"]').toggleClass('orange red').attr('id',1);
-      $(newCell).toggleClass('blue red').attr('id',0);
+      var head = $('[data-row="10"][data-col="' + (10+i) + '"]').get(0);
+      $(head).toggleClass('blue ' + color).attr('id',i);
+    }
+    eat();
+    keyPress();
+  }
+
+  var moveCells = function () {
+
+    var col = parseInt($('.red').attr('data-col'));
+    var row = parseInt($('.red').attr('data-row'));
+    var newRow = row + move[0];
+    var newCol = col + move[1];
+    if (newRow == 15) {
+      newRow = 0;
+    } else if (newRow == -1){
+      newRow = 14;
+    }
+    if (newCol == 15) {
+      newCol = 0;
+    } else if (newCol == -1){
+      newCol = 14;
     }
 
+    var firstCell = $('[data-row="' + newRow + '"][data-col="' + newCol + '"]').get(0);
+
+    if ($(firstCell).hasClass('yellow')) {
+      length ++;
+      time = time - 5;
+      eat();
+    }
+
+    for(var i = length;i>=0;i--) {
+      if (i == length){
+        $('[id="' + i + '"]').toggleClass('orange blue').removeAttr('id');
+      } else if (i == 0){
+        $('[id="' + i + '"]').attr('id',(i+1)).toggleClass('red orange');
+        $(firstCell).toggleClass('blue red').attr('id',0);
+      } else {
+        $('[id="' + i + '"]').attr('id',(i+1));
+      }
+    }
+  }
+
+  function eat (){
+    $('.yellow').removeClass('yellow');
+    var blues = $('.blue');
+    var randomEat = Math.floor(Math.random() * (blues.length-1));
+    $(blues[randomEat]).addClass('yellow');
+  }
+
+  createGrid();
+  start();
 });
