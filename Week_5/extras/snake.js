@@ -72,7 +72,10 @@ $(document).ready(function() {
       time = time - 5;
       eat();
     }
-
+    if ($(firstCell).hasClass('orange')) {
+      $('.js-modal').modal("show");
+      setTimeout(function(){  location.reload(true); }, 2000);
+    }
     for(var i = length;i>=0;i--) {
       if (i == length){
         $('[id="' + i + '"]').toggleClass('orange blue').removeAttr('id');
