@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.container {
+    width: 500px;
+    margin: 50px auto;
+}
+.container div {
+    float: left;
+    width: 30px;
+    height: 30px;
+    border: 1px solid white;
+}
+.red {
+    background-color: #E83B3B;
+}
+.blue {
+    background-color: #0057FF;
+}
+.orange {
+    background-color: #DF671B;
+}
