@@ -1,0 +1,8 @@
+<h1>Add Tournament</h1>
+<%= form_for @tournament do |f| %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.button 'Save Tournament'%>
+<% end %>
