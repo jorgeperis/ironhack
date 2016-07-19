@@ -1,0 +1,45 @@
+<h1>Product info</h1>
+<h2><b><%= @product.title %></b></h2>
+<h2><%= @product.description %></h2>
+<h4>User: <%= @product.user.name %></h4>
+<% if @product.user.id == session[:current_user_id] %>
+ <%= form_tag("/product/destroy", method: "delete") do %>
+ <%= hidden_field_tag(:product_id, @product.id) %>
+ <%= submit_tag("Destroy") %>
+ <% end %>
+<% end %>
+<% if @timeto < 0 %>
+<h3>Time to deadline: FINISH!</h3>
+<% else %>
+<h3>Time to deadline: <%="#{@dd} days, #{@hh} hours, #{@mm} minutes"%></h3>
+<% end %>
+
+<% if @bids.first %>
+<h2>Best bid: <%= @bestbid.amount %>€ - <%=@bestbid.user.name%></h2>
+<h1>Bids</h1>
+<ul>
+  <% @bids.each do |bid| %>
+  <li><%= bid.amount %>€ - <%= bid.user.name %></li>
+  <% end %>
+</ul>
+<% end %>
+<br><br>
+
+<% if @timeto < 0 %>
+  <% if @bestbid %>
+  <h1>Winner</h1>
+  <h2>Winner: <%= @bestbid.user.name %></h2>
+  <% else %>
+  <h2>No winner!</h2>
+  <% end %>
+<% else %>
+<h1>Add Bid</h1>
+  <%= form_for @bid do |f| %>
+    <%= f.label :amount %>
+    <%= f.number_field :amount, placeholder: "Minimun bid: #{@minimunbid + 1}€" %>
+
+    <%= f.hidden_field :product_id, :value => @product.id%>
+    <%= f.hidden_field :minimunbid, :value => @minimunbid%>
+    <%= f.button %>
+  <% end %>
+<% end %>
