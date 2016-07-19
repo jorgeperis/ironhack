@@ -1,0 +1,14 @@
+<h1> The <%= @sandwich.name %> Sandwich</h1>
+<p> Bread Type: <%= @sandwich.bread_type %> </p>
+<p>Ingredients:</p>
+<% @sandwich.ingredients.each do |ingredient| %>
+<li><%= ingredient.name %></li>
+<% end %>
+<p> Total Calories: <%= @totalcalories %></p>
+<br>
+<h3>Add Ingredients:</h3>
+<ul>
+<% @ingredients.each do |ingredient| %>
+<li><%= button_to ingredient.name, "/api/sandwiches/#{@sandwich.id}/ingredients/add", method: :post, :'data-id' => ingredient.id, :'class' => 'ingredient'  %></li>
+<% end %>
+</ul>

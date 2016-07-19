@@ -1,0 +1,7 @@
+<ul>
+<% @sandwiches.each do |sandwich| %>
+<li>
+<%= link_to sandwich.name, "/sandwiches/#{sandwich.id}" %>
+</li>
+<% end %>
+</ul>
