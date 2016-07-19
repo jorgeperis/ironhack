@@ -8,4 +8,8 @@ Rails.application.routes.draw do
   get "/products/:id", to: 'product#info'
   delete "/product/destroy", to: 'product#destroy'
   get "/", to: 'product#show'
+  post '/reviews', to: 'review#create'
+  patch '/review', to: 'review#patch'
+  get '/reviews/edit/:id', to: 'review#edit'
+  get '/user/profile', to: 'user#show'
 end

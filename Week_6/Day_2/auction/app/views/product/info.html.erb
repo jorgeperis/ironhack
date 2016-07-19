@@ -43,3 +43,20 @@
     <%= f.button %>
   <% end %>
 <% end %>
+<% @product.reviews.each do |review| %>
+  <h3><%= review.description %></h3>
+    <h4><%= review.user.name %></h4>
+    <% if review.user == current_user %>
+    <%= button_to "Edit", "/reviews/edit/#{review.id}", method: "get" %>
+    <% end %>
+<% end %>
+<% if current_user %>
+<%= form_for @review do |f| %>
+  <%= f.label :description %>
+  <%= f.text_area :description, placeholder: "Description here" %>
+
+  <%= f.hidden_field :product_id, :value => @product.id%>
+  <%= f.hidden_field :user_id, :value => current_user.id%>
+  <%= f.button %>
+  <% end %>
+<% end %>

@@ -1,0 +1,7 @@
+
+<%= form_for @review do |f| %>
+  <%= f.label :description  %>
+  <%= f.text_area :description, :value => @review.description %>
+  <%= f.hidden_field :id, :value => @review.id%>
+  <%= f.button %>
+  <% end %>

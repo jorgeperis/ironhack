@@ -3,6 +3,7 @@ class ProductController < ApplicationController
   def info
     @product = Product.find_by(id: params[:id])
     @bids = Bid.where(product: @product)
+
     @bid = Bid.new
     @timeto = (@product.deadline - DateTime.now)
     @mm, @ss = @timeto.divmod(60)
@@ -18,6 +19,7 @@ class ProductController < ApplicationController
     else
       @minimunbid = @product.minimun_bid
     end
+    @review = Review.new
   end
 
   def show
